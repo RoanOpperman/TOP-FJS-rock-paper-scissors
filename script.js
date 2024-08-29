@@ -37,8 +37,12 @@ let computerChoice = getComputerChoice();
 console.log("T " + computerChoice);
 // Define a function named getHumanChoice
 const getHumanChoice = function () {
-  // Declare a let variable humanSelect to store the user's input using the prompt: "Let's play Rock, Paper, Scissors" and convert humanSelect to lowercase letters
-  let humanSelection = prompt("Let's play Rock, Paper, Scissors").toLowerCase();
+    // Declare a let variable humanSelect to store the user's input using the prompt: "Let's play Rock, Paper, Scissors" and convert humanSelect to lowercase letters
+    let humanSelection = prompt("Let's play Rock, Paper, Scissors").toLowerCase();
+    // return the humanSelection variable from the getHumanChoice function if user input strictly matches the string from selectOne, selectTwo and selectThree strings skip the string sanitization
+if (humanSelection === selectOne || humanSelection === selectTwo ||humanSelection === selectThree){
+    return humanSelection;
+};
 
   const cleanHumanSelect = function (humanSelect) {
     // Define a function named cleanHumanSelect with humanSelect as a parameter to sanitize the input
@@ -126,6 +130,8 @@ let roundPlayed = playRound(humanChoice, computerChoice);
 console.log("Human: " + humanScore);
 // Log the computer score to confirm the correct score is incrementing 
 console.log("Computer: " + computerScore);
+// alert the user/human if they won or lost the round
+alert (roundPlayed);
 
 // Log the result of playRound(humanChoice, computerChoice) to the console
 // Define a function named playGame with parameters humanScore and computerScore
