@@ -1,145 +1,174 @@
 // initiate and confirm script is connected to the HTML file
 "use strict";
 console.log("hello world");
-
-// Initialize scores for both players: set humanScore and computerScore to 0.
+// ****************************************************
+// *************   GLOBAL VARIABLE   ******************
+// ****************************************************
+// CONST CONST  CONST CONST CONST CONST  CONST  CONST
 let humanScore = 0;
 let computerScore = 0;
-// Store the choices ("Rock", "Paper", "Scissors") in the variables: selectOne, selectTwo, and selectThree.
 const selectOne = "Rock";
 const selectTwo = "Paper";
 const selectThree = "Scissors";
 
-// Define a function named getComputerChoice
-const getComputerChoice = function () {
-// Generate a random number between 1 and 3 and store it in a variable named computerSelectRandom
-  let computerSelectRandom = Math.floor(Math.random() * 3 + 1);
-  // Declare a variable computerSelection and set it to null
-  let computerSelection = null;
-  // Use an if statement with 3 conditions to assign a value to computerSelection based on computerSelectRandom:
-  // if computerSelectRandom equals 1, assign selectOne to computerSelection
-  if (computerSelectRandom === 1) {
-    computerSelection = selectOne;
-    // if computerSelectRandom equals 2, assign selectTwo to computerSelection
-  } else if (computerSelectRandom === 2) {
-    computerSelection = selectTwo;
-    // if computerSelectRandom equals 3, assign selectThree to computerSelection
-  } else {
-    computerSelection = selectThree;
-  }
-  // Return computerSelection from the function
-  return computerSelection;
-};
+//-----------------------------------------------------
+//-----------------------------------------------------
 
-// Log the result of getComputerChoice() to the console
-// console.log(getComputerChoice());
-let computerChoice = getComputerChoice();
-console.log("T " + computerChoice);
-// Define a function named getHumanChoice
-const getHumanChoice = function () {
-    // Declare a let variable humanSelect to store the user's input using the prompt: "Let's play Rock, Paper, Scissors" and convert humanSelect to lowercase letters
-    let humanSelection = prompt("Let's play Rock, Paper, Scissors").toLowerCase();
-    // return the humanSelection variable from the getHumanChoice function if user input strictly matches the string from selectOne, selectTwo and selectThree strings skip the string sanitization
-if (humanSelection === selectOne || humanSelection === selectTwo ||humanSelection === selectThree){
-    return humanSelection;
-};
+//#####################################################
+//#############   getComputerChoice   #################
+//#####################################################
 
-  const cleanHumanSelect = function (humanSelect) {
-    // Define a function named cleanHumanSelect with humanSelect as a parameter to sanitize the input
-    // Store the first letter of the lowercase humanSelect in a variable named toUpperFirst, and capitalize it
-    const toUpperFirst = humanSelect.charAt(0).toUpperCase();
-    // Store the remainder of the string (excluding the first character) in a variable named restOfString
-    const restOfString = humanSelect.slice(1);
-    // Concatenate toUpperFirst and restOfString, and store the result in a variable named sanitizedString
-    const sanitizedString = toUpperFirst + restOfString;
-    // return the sanitizedString string from the cleanHumanSelect
-    return sanitizedString;
-  };
+/* Allow the computer to choose from the "select####" 
+variables. First, create a variable to store a random 
+number. Then, declare another variable that starts 
+empty or as null. Based on conditions determined by the 
+random number, assign one of the options ("Rock," "Paper"
+or "Scissors") to this variable, enabling the function 
+to make a random choice.*/
 
-  //        ..Use an if statement to check if the sanitized input matches any of the choices (selectOne, selectTwo, selectThree)
-  //        ..If it matches, return the sanitized input from the getHumanChoice function
-  const sanitizedInput = cleanHumanSelect(humanSelection);
-  if (
-    sanitizedInput === selectOne ||
-    sanitizedInput === selectTwo ||
-    sanitizedInput === selectThree
-  ) {
-  // Return sanitizedString from the cleanHumanSelect function
-    return sanitizedInput;
-   // Otherwise if it does not match:
-  } else {
-// Alert user that their input is invalid
-    alert("That is not a valid choice, try again");
-    // Call the getComputer Choice function to repeat to allow correction
-    getComputerChoice();
-    // Call the getHumanChoice function to repeat
-    getHumanChoice();
-  }
-};
-
-// Log the result of getHumanChoice() to the console
-let humanChoice = getHumanChoice();
-console.log(humanChoice);
-// Define a function named playRound with parameters humanChoice and computerChoice
-const playRound = function (humanChoice, computerChoice) {
-// Declare a variable humanWins to store the message "You win this round"
-  const humanWins = "You win this round";
-// Declare a variable computerWins to store the message "You lose this round"
-  const computerWins = "You lose this round";
-// If humanChoice is the same as computerChoice:
-  if ((humanChoice === computerChoice)) {
-// Alert the user that their choice was the same and prompt them to try again
-    alert("You tie with the computer this round, try again");
-// Call getComputerChoice again to re-assign a new random choice to a variable
-    let tieComputerChoice = getComputerChoice(); 
-// Call getHumanChoice again to get a new choice from the user and assign it to a variable
-    let tieHumanChoice = getHumanChoice();
-// Return a call function and use the new choices as arguments
-    return playRound(tieHumanChoice,tieComputerChoice);
-// Otherwise:
-  } else {
-// if humanChoice is "Rock" (selectOne) and computerChoice is "Scissors" (selectThree), increment humanScore by 1 and return humanWins
-    if (humanChoice === selectOne && computerChoice === selectThree) {
-      humanScore++;
-      console.trace(humanScore);
-      return humanWins;
-    }
-// if humanChoice is "Paper" (selectTwo) and computerChoice is "Rock" (selectOne), increment humanScore by 1 and return humanWins
-    if (humanChoice === selectTwo && computerChoice === selectOne) {
-      humanScore++;
-      console.trace(humanScore);
-      return humanWins;
-    }
-// if humanChoice is "Scissors" (selectThree) and computerChoice is "Paper" (selectTwo), increment humanScore by 1 and return humanWins
-    if (humanChoice === selectThree && computerChoice === selectTwo) {
-      humanScore++;
-      console.trace(humanScore);
-      return humanWins;
-// Otherwise, and increment computerScore by 1 return computerWins
+let getComputerChoice = function () {
+    let computerSelectRandom = Math.floor(Math.random() * 3 + 1);
+    let computerSelection = null;
+    
+    if (computerSelectRandom === 1) {
+        computerSelection = selectOne;
+    } else if (computerSelectRandom === 2) {
+        computerSelection = selectTwo;
     } else {
-      computerScore++;
-      console.trace(computerScore);
-      return computerWins;
+        computerSelection = selectThree;
+      }
+      return computerSelection;
+    };
+    /*NOTES: ////How do I make sure the computer doesn't 
+ ////start with the same choice for every first round.
+ Find a way to stop the computer from selecting the same
+ option more than twice.*/
+
+ //#####################################################
+//###############   getHumanChoice   ##################
+//#####################################################
+
+/* The getHumaneChoice function prompts the user to
+enter a choice of "Rock," "Paper," or "Scissors." It
+sanitizes or corrects the input to match these options 
+or skips sanitization if unnecessary. If the user 
+misspells an option or enters an invalid choice, the 
+function repeatedly prompts the user until a valid 
+choice is entered.*/
+
+let getHumanChoice = function () {
+    let humanInput = prompt("Let's play Rock, Paper, Scissors").toLowerCase();
+    if (humanInput === selectOne || humanInput === selectTwo ||humanInput === selectThree){
+        return humanInput;
+    };
+    
+    const cleanHumanInput = function (humanInput) {
+        const toUpperFirst = humanInput.charAt(0).toUpperCase();
+        const restOfString = humanInput.slice(1);
+        const sanitizedString = toUpperFirst + restOfString;
+        return sanitizedString;
+    };
+    
+    //----  LOCAL FUNCTION CALLS: (getHumanChoice()) ----
+    const sanitizedHumanInput = cleanHumanInput(humanInput);
+    if (
+        sanitizedHumanInput === selectOne ||
+        sanitizedHumanInput === selectTwo ||
+        sanitizedHumanInput === selectThree
+    ) {
+        return sanitizedHumanInput;
+    } else {// ROUND RESET
+        alert("That is not a valid choice, try again");
+        getComputerChoice();
+        return getHumanChoice();
     }
-  }
 };
 
-// Call playRound and assign it to a variable (roundPlayed)
-let roundPlayed = playRound(humanChoice, computerChoice);
-// Log the human score to confirm the correct score is incrementing 
-console.log("Human: " + humanScore);
-// Log the computer score to confirm the correct score is incrementing 
-console.log("Computer: " + computerScore);
-// alert the user/human if they won or lost the round
-alert (roundPlayed);
+//#####################################################
+//#################   playRound   #####################
+//#####################################################
 
-// Log the result of playRound(humanChoice, computerChoice) to the console
-// Define a function named playGame with parameters humanScore and computerScore
-// Repeat the following until humanScore is equal to or greater than 3 or computerScore is equal to or greater than 3:
-// If humanScore is greater than or equal to computerScore, alert the user that they won the game
-// Otherwise, alert the user that they lost the game
-// Reset both humanScore and computerScore to 0
-// Alert the user with "Let's play again"
-// Call getHumanChoice function to start a new round
-// Call getHumanChoice function to start the game
-// Call playRound function with getHumanChoice and getComputerChoice as arguments to begin the game rounds
+/*playRound is the logic for a single round. Depending on 
+the conditions of the if statements, the user will retrieve
+a message letting them know if they won or lost round, as well
+the scores increment by 1. */
+
+let round = 0;
+const playRound = function (humanChoice, computerChoice) {
+    if ((humanChoice === computerChoice)) {
+        alert("You tie with the computer this round, try again");
+        //NOTE: Still not sure if the next two variables
+        // and the function call arguments are necessary 
+        let tieComputerChoice = getComputerChoice();
+        console.log(tieComputerChoice);
+        getComputerChoice(); 
+        let tieHumanChoice = getHumanChoice();
+        // console.log(playRound(tieHumanChoice,tieComputerChoice));
+    } else {
+        const humanWins = () =>  {
+            humanScore++;
+            round++
+            return (alert (`You win this round(${round}/5). (human:${humanScore}/5 computer:${computerScore}/5)`),"the human scored");
+        };
+            if (humanChoice === selectOne && computerChoice === selectThree) {
+                return humanWins();
+            }else if (humanChoice === selectTwo && computerChoice === selectOne) {
+                    return humanWins();
+                }else if (humanChoice === selectThree && computerChoice === selectTwo) {
+                    return humanWins();
+                } else {
+                    computerScore++;
+                    round++
+                    return (alert(`You lose this round(${round}/5). (${humanScore}/5 computer:${computerScore}/5)`),"the computer scored");
+                }
+            }
+            
+        };
+        
+        
+        // ****************************************************
+        // *****   FUNCTION CALLS & FULL GAME LOGIC    ********
+        // ****************************************************
+        /* As long as less than 5 rounds have been played, execute the 
+        computer choice function, human choice function, the the
+        logic for a single round. If either human or computer score
+        is 3 points more then other or who ever has the highest score 
+        when all 5 rounds are played. Lastly after each game, when
+        a full game is played, reset any tracking variable and call
+        the the playGame function.  */
+        const playGame = function(){
+            for (let i = 1 ; i<=5 ; i++){
+            let computerChoice = getComputerChoice();
+            console.log("Initial computer choice: " + computerChoice);
+            let humanChoice = getHumanChoice();
+            console.log("Initial human choice: " + humanChoice);
+            const roundPlayed = playRound(humanChoice,computerChoice);
+            console.log("Last line= " + roundPlayed);
+            console.log("human: " + humanScore,"computer: " + computerScore)
+            if (humanScore ===  5 && (humanScore > computerScore)){
+                alert("Awesome!, You can call yourself smarter than a computer. You win!")
+                return;
+            }else if (humanScore > computerScore + 2) {
+                alert("Awesome!, You can call yourself smarter than a computer. You win!");
+                return;
+            }else if(i === 5 && (computerScore > humanScore)){
+                alert("You know...computers are actually pretty dumb. You lose.");
+                return;
+            }
+        }
+        
+    };
+    let playAgain = true;
+    
+    while (playAgain){
+        humanScore = 0;
+        computerScore = 0;
+        round = 0;
+        console.log(humanScore, computerScore);
+        playGame();
+        alert ("Hit enter to play again");
+    };    
+
+    /*NOTES: I believe I can condense the code a bit. I got the game to work for now and will return for
+    either some more after thoughts and learn what snippets of code can be used again in the future. Lastly
+    I will make sure there is good comments and documentation is complete */
