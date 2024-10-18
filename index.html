@@ -1,15 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>TOP foundations | JavaScript Rock, Paper, Scissors</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOP foundations | JavaScript Rock, Paper, Scissors
-    </title>
-</head>
-
-<body>
-    <script src="script.js"></script>
-</body>
-
+  <body>
+    <div id="container">
+      <div id="human" class="players">
+        <div id="human-choices">
+          <div id="rock" class="choice">
+            <div class="btn-element"></div>
+          </div>
+          <div id="paper" class="choice">
+            <div class="btn-element"></div>
+          </div>
+          <div id="scissors" class="choice">
+            <div class="btn-element"></div>
+          </div>
+        </div>
+        <div class="choice-display-container">
+          <div class="choice-display"></div>
+        </div>
+        <div class="player-info">
+          <div class="player-name player">HUMAN</div>
+          <div class="player-score player">00</div>
+        </div>
+      </div>
+      <!--change below after above is layed out-->
+      <div id="computer" class="players">
+        <div id="computer-info" class="player-info">
+          <div id="computer-name" class="player-name player">COMPUTER</div>
+          <div id="computer-score" class="player-score player">00</div>
+        </div>
+        <div id="human-choices"></div>
+        <div id="computer-display" class="choice-display-container">
+          <div class="choice-display"></div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

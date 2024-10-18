@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: slateblue;
+}
+#container {
+  background-color: aquamarine;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.players {
+  flex: 1;
+}
+#human {
+  display: flex;
+  flex-direction: column;
+  background-color: tomato;
+  padding: 20px;
+}
+#human-choices {
+  display: flex;
+  flex: 3;
+  width: 55%;
+  align-self: center;
+}
+.choice {
+  display: flex;
+  flex: 1;
+  margin-bottom: 20px;
+  position: relative;
+  justify-content: center;
+}
+#rock {
+}
+#paper {
+}
+#scissors {
+}
+.btn-element {
+  position: absolute;
+  bottom: 0;
+  border-radius: 100%;
+  width: 70%;
+  aspect-ratio: 1/1;
+  background-color: #a7a7a7;
+}
+.choice-display-container {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+}
+
+.choice-display {
+  background-color: #afafaf;
+  height: 60px;
+  width: 70%;
+  border-radius: 120px;
+}
+.player-info {
+  flex: 1;
+  display: flex;
+  /* background-color: #ffd633; */
+  align-items: center;
+  color: white;
+}
+.player {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  height: 100%;
+  font-weight: 600;
+}
+.player-name {
+  flex: 6;
+}
+.player-score {
+  flex: 1;
+  text-align: center;
+  padding-right: 20px;
+}
+#computer {
+  background-color: slateblue;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+}
+#computer-display {
+  flex: 5;
+  display: flex;
+}
+@media only screen and (max-width: 310px) {
+  body {
+    scale: 1;
+  }
+
+  #computer {
+    padding: 10px;
+  }
+  #human {
+    padding: 10px;
+  }
+  .player {
+    font-size: 0.9rem;
+  }
+  .choice-display {
+    border-radius: 150px;
+    height: 50px;
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  /* Styles for screens larger than modern smartphones */
+  /* Styles for screens larger than an iPad Pro */
+  #container {
+    flex-direction: row;
+  }
+  .choice-display {
+    background-color: orange;
+    border-radius: 150px;
+    height: 80px;
+    width: 80%;
+  }
+  #computer-info {
+    order: 1;
+    display: flex;
+    padding-left: 20px;
+  }
+  #computer-name {
+    order: 2;
+    justify-content: end;
+  }
+  #computer-display {
+    flex: 3;
+  }
+
+  .player {
+    font-size: 2.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+}
+@media only screen and (min-width: 500px) {
+  /* Styles for screens larger than modern smartphones */
+  /* Styles for screens larger than an iPad Pro */
+  .player {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+@media only screen and (min-width: 1024px) {
+  .player {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    height: 100%;
+  }
+}
