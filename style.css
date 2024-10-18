@@ -62,9 +62,8 @@ body {
 .player-info {
   flex: 1;
   display: flex;
-  /* background-color: #ffd633; */
-  align-items: center;
   color: white;
+  align-items: center;
 }
 .player {
   font-family: Arial, Helvetica, sans-serif;
@@ -78,13 +77,13 @@ body {
 .player-score {
   flex: 1;
   text-align: center;
-  padding-right: 20px;
+  /* padding-right: 20px; */
 }
 #computer {
   background-color: slateblue;
   display: flex;
   flex-direction: column;
-  padding: 30px 20px;
+  padding: 30px 20px 20px 20px;
 }
 #computer-display {
   flex: 5;
@@ -117,7 +116,6 @@ body {
     flex-direction: row;
   }
   .choice-display {
-    background-color: orange;
     border-radius: 150px;
     height: 80px;
     width: 80%;
@@ -125,7 +123,10 @@ body {
   #computer-info {
     order: 1;
     display: flex;
-    padding-left: 20px;
+    /* padding-left: 20px; */
+  }
+  #computer-score {
+    justify-content: end;
   }
   #computer-name {
     order: 2;
@@ -139,21 +140,19 @@ body {
     font-size: 2.5rem;
     font-weight: 600;
     display: flex;
-    align-items: center;
   }
 }
-@media only screen and (min-width: 500px) {
-  /* Styles for screens larger than modern smartphones */
-  /* Styles for screens larger than an iPad Pro */
+@media only screen and (max-width: 800px) {
   .player {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.6rem;
   }
+  .choice-display {
+    height: 60px;
+  }
+}
 @media only screen and (min-width: 1024px) {
   .player {
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
     font-weight: 900;
-    height: 100%;
   }
 }
