@@ -9,21 +9,33 @@
   </head>
 
   <body>
+    <div class="gradient-layer"></div>
     <div id="container">
+      <div class="btn-replay-text">REPLAY</div>
+      <div class="round">ROUND 1</div>
+      <div class="btn-replay"></div>
       <div id="human" class="players">
         <div id="human-choices">
           <div id="rock" class="choice">
-            <div class="btn-element"></div>
+            <div class="btn-element">
+              <img src="images/rock.png" alt="" class="btn-icon" />
+            </div>
           </div>
           <div id="paper" class="choice">
-            <div class="btn-element"></div>
+            <div class="btn-element">
+              <img src="images/paper.png" alt="" class="btn-icon" />
+            </div>
           </div>
           <div id="scissors" class="choice">
-            <div class="btn-element"></div>
+            <div class="btn-element">
+              <img src="images/scissors.png" alt="" class="btn-icon" />
+            </div>
           </div>
         </div>
         <div class="choice-display-container">
-          <div class="choice-display"></div>
+          <div class="choice-display default-display-state">
+            <span class="choice-display-txt-slide-in">Rock</span>
+          </div>
         </div>
         <div class="player-info">
           <div class="player-name player">HUMAN</div>
@@ -38,7 +50,9 @@
         </div>
         <div id="human-choices"></div>
         <div id="computer-display" class="choice-display-container">
-          <div class="choice-display"></div>
+          <div class="choice-display win-round-display-state">
+            Computer Wins!
+          </div>
         </div>
       </div>
     </div>
