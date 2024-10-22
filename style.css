@@ -66,6 +66,19 @@ body {
     opacity: 1;
   }
 }
+@keyframes optionOut {
+  0% {
+    opacity: 1;
+    left: 0%;
+  }
+  30% {
+    opacity: 0;
+  }
+  100% {
+    left: -50%;
+    opacity: 0;
+  }
+}
 
 .round {
   color: white;
@@ -195,9 +208,12 @@ body {
 }
 .choice-display-txt-slide-in {
   position: relative;
-
-  animation: optionIn 2s;
+  animation: optionIn 0.8s;
 }
+.choice-display-txt-slide-out {
+  animation: optionOut 1.6s;
+}
+
 .player-info {
   flex: 1;
   display: flex;

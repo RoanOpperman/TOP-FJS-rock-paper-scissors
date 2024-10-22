@@ -1,7 +1,7 @@
 const rpsUI = {
   displays: {
     humanDisplay: document.querySelector("#human-display"),
-    computerDisplay: document.querySelector("#computer-display span"),
+    computerDisplay: document.querySelector("#computer-display-txt"),
   },
   buttons: {
     rock: document.querySelector("#rock .btn-element"),
@@ -34,11 +34,11 @@ const choices = {
   paper: "Paper",
   scissors: "Scissors",
   computer: {
-    randomNumber: Math.floor(Math.random() * 3 + 1),
     choice: function () {
-      if (this.randomNumber === 1) {
+      const randomNumber = Math.floor(Math.random() * 3 + 1);
+      if (randomNumber === 1) {
         return choices.rock;
-      } else if (this.randomNumber === 2) {
+      } else if (randomNumber === 2) {
         return choices.paper;
       } else {
         return choices.scissors;
@@ -47,21 +47,79 @@ const choices = {
   },
   human: {},
 };
+
 const rpsWinConditions = {
   rock: { winsAgainst: "scissors", losesAgainst: "paper" },
   paper: { winsAgainst: "rock", losesAgainst: "scissors" },
   scissors: { winsAgainst: "paper", losesAgainst: "rock" },
 };
+const humanDecided = new Event("humanDecided");
+
+rpsUI.buttons.rock.addEventListener("mouseup", function (e) {
+  rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-out");
+  rpsUI.displays.humanDisplay.style.left = "100%";
+
+  rpsUI.displays.humanDisplay.classList.remove("choice-display-txt-slide-in");
+  setTimeout(function () {
+    rpsUI.displays.humanDisplay.textContent = choices.rock;
+    rpsUI.displays.humanDisplay.classList.remove(
+      "choice-display-txt-slide-out"
+    );
+  }, 300);
+  setTimeout(function () {
+    rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-in");
+  }, 10);
+  rpsUI.displays.humanDisplay.style.left = "0%";
+  rpsUI.buttons.rock.dispatchEvent(humanDecided, "humanDecided");
+});
+rpsUI.buttons.paper.addEventListener("mouseup", function (e) {
+  rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-out");
+  rpsUI.displays.humanDisplay.style.left = "100%";
+
+  rpsUI.displays.humanDisplay.classList.remove("choice-display-txt-slide-in");
+  setTimeout(function () {
+    rpsUI.displays.humanDisplay.textContent = choices.paper;
+    rpsUI.displays.humanDisplay.classList.remove(
+      "choice-display-txt-slide-out"
+    );
+  }, 300);
+  setTimeout(function () {
+    rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-in");
+  }, 10);
+  rpsUI.displays.humanDisplay.style.left = "0%";
+  rpsUI.buttons.rock.dispatchEvent(humanDecided, "humanDecided");
+});
+rpsUI.buttons.scissors.addEventListener("mouseup", function (e) {
+  rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-out");
+  rpsUI.displays.humanDisplay.style.left = "100%";
+
+  rpsUI.displays.humanDisplay.classList.remove("choice-display-txt-slide-in");
+  setTimeout(function () {
+    rpsUI.displays.humanDisplay.textContent = choices.scissors;
+    rpsUI.displays.humanDisplay.classList.remove(
+      "choice-display-txt-slide-out"
+    );
+  }, 300);
+  setTimeout(function () {
+    rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-in");
+  }, 10);
+  rpsUI.displays.humanDisplay.style.left = "0%";
+  rpsUI.buttons.rock.dispatchEvent(humanDecided, "humanDecided");
+});
+
+document.querySelector(".btn-element").addEventListener("humanDecided", () => {
+  rpsUI.displays.computerDisplay.textContent = choices.computer.choice();
+});
 // rpsUI.displays.humanDisplay.textContent = "Rock";
-rpsUI.displays.computerDisplay.textContent = "Annika";
-rpsUI.displays.humanDisplay.textContent = "Roan";
-rpsUI.buttons.rock.style.backgroundColor = "red";
-rpsUI.buttons.paper.style.backgroundColor = "yellow";
-rpsUI.buttons.scissors.style.backgroundColor = "green";
-rpsUI.buttons.replay.style.backgroundColor = "orange";
-rpsUI.nameAndScore.human.name.style.color = "#FF75DB";
-rpsUI.nameAndScore.human.score.style.color = "#42B34D";
-rpsUI.nameAndScore.computer.name.style.color = "#00B2B1";
-rpsUI.nameAndScore.computer.score.style.color = "#DB2B23";
-rpsUI.round.textContent = "Ime Da Boss!!!";
+// rpsUI.displays.computerDisplay.textContent = "Annika";
+// rpsUI.displays.humanDisplay.textContent = "Roan";
+// rpsUI.buttons.rock.style.backgroundColor = "red";
+// rpsUI.buttons.paper.style.backgroundColor = "yellow";
+// rpsUI.buttons.scissors.style.backgroundColor = "green";
+// rpsUI.buttons.replay.style.backgroundColor = "orange";
+// rpsUI.nameAndScore.human.name.style.color = "#FF75DB";
+// rpsUI.nameAndScore.human.score.style.color = "#42B34D";
+// rpsUI.nameAndScore.computer.name.style.color = "#00B2B1";
+// rpsUI.nameAndScore.computer.score.style.color = "#DB2B23";
+// rpsUI.round.textContent = "Ime Da Boss!!!";
 // rpsUI.startEndScreen.classList.add("start-end-swipe");
