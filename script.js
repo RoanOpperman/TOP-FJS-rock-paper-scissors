@@ -1,140 +1,67 @@
-("use strict");
-console.log("hello world");
-//STARTS:Initial CSS*********************
-// const choiceButtons = document.querySelectorAll(".btn-element");
-// for (let btn of choiceButtons) {
-//   const btnWidth = btn.getBoundingClientRect().width;
-//   btn.style.height = `${btnWidth}px`;
-// }
-//ENDS:Initial CSS*********************
-// Initiations and Options
-let humanScore = 0;
-let computerScore = 0;
-let round = 0;
-const selectOne = "Rock";
-const selectTwo = "Paper";
-const selectThree = "Scissors";
-
-// This function enables the computer to simulate choosing from the list of three options above
-let getComputerChoice = function () {
-  let computerSelectRandom = Math.floor(Math.random() * 3 + 1);
-  let computerSelection = null;
-
-  if (computerSelectRandom === 1) {
-    computerSelection = selectOne;
-  } else if (computerSelectRandom === 2) {
-    computerSelection = selectTwo;
-  } else {
-    computerSelection = selectThree;
-  }
-  return computerSelection;
+const rpsUI = {
+  displays: {
+    humanDisplay: document.querySelector("#human-display"),
+    computerDisplay: document.querySelector("#computer-display span"),
+  },
+  buttons: {
+    rock: document.querySelector("#rock .btn-element"),
+    paper: document.querySelector("#paper .btn-element"),
+    scissors: document.querySelector("#scissors .btn-element"),
+    replay: document.querySelector(".btn-replay"),
+  },
+  nameAndScore: {
+    human: {
+      name: document.querySelector("#human-name"),
+      score: document.querySelector("#human-score"),
+    },
+    computer: {
+      name: document.querySelector("#computer-name"),
+      score: document.querySelector("#computer-score"),
+    },
+  },
+  round: document.querySelector(".round"),
+  startEndScreen: document.querySelector("#start-end-screen"),
 };
-
-let getHumanChoice = function () {
-  // let humanInput = prompt("Let's play Rock, Paper, Scissors").toLowerCase();
-  if (
-    humanInput === selectOne ||
-    humanInput === selectTwo ||
-    humanInput === selectThree
-  ) {
-    return humanInput;
-  }
-  //cleanHumanChoice ensures the human not to worry about case sensitivity.
-  const cleanHumanChoice = function (humanInput) {
-    const toUpperCaseFirst = humanInput.charAt(0).toUpperCase();
-    const restOfHumanInput = humanInput.slice(1);
-    const sanitizedString = toUpperCaseFirst + restOfHumanInput;
-    return sanitizedString;
-  };
-  // testing if the human input matches the set choices limits choices to just Rock, Paper, Scissors
-  const sanitizedHumanInput = cleanHumanChoice(humanInput);
-  if (
-    sanitizedHumanInput === selectOne ||
-    sanitizedHumanInput === selectTwo ||
-    sanitizedHumanInput === selectThree
-  ) {
-    return sanitizedHumanInput;
-  } else {
-    // alert("That is not a valid choice, try again");
-    getComputerChoice(); //Gets a new computer choice
-    return getHumanChoice(); // Allows human to retry
-  }
+const startVars = {
+  scores: {
+    humanScore: 0,
+    computerScore: 0,
+  },
+  round: 0,
 };
-
-const playRound = function (humanChoice, computerChoice) {
-  if (humanChoice === computerChoice) {
-    // alert("You tie with the computer this round, try again");
-    let tieComputerChoice = getComputerChoice();
-    console.log(tieComputerChoice);
-    getComputerChoice();
-    let tieHumanChoice = getHumanChoice();
-  } else {
-    const humanWins = () => {
-      humanScore++;
-      round++;
-      // return (
-      //   alert(
-      //     `You win this round(${round}/5). (human:${humanScore}/5 computer:${computerScore}/5)`
-      //   ),
-      //   "the human scored"
-      // );
-    };
-    if (humanChoice === selectOne && computerChoice === selectThree) {
-      return humanWins();
-    } else if (humanChoice === selectTwo && computerChoice === selectOne) {
-      return humanWins();
-    } else if (humanChoice === selectThree && computerChoice === selectTwo) {
-      return humanWins();
-    } else {
-      computerScore++;
-      round++;
-      // return (
-      //   alert(
-      //     `You lose this round(${round}/5). (${humanScore}/5 computer:${computerScore}/5)`
-      //   ),
-      //   "the computer scored"
-      // );
-    }
-  }
+const choices = {
+  rock: "Rock",
+  paper: "Paper",
+  scissors: "Scissors",
+  computer: {
+    randomNumber: Math.floor(Math.random() * 3 + 1),
+    choice: function () {
+      if (this.randomNumber === 1) {
+        return choices.rock;
+      } else if (this.randomNumber === 2) {
+        return choices.paper;
+      } else {
+        return choices.scissors;
+      }
+    },
+  },
+  human: {},
 };
-
-const playGame = function () {
-  const tellHumanTheyWon =
-    "Awesome!, You can call yourself smarter than a computer. You win!";
-  const tellHumanTheyLost =
-    "You know...computers are actually pretty dumb. You lose.";
-  for (let i = 1; i <= 5; i++) {
-    let computerChoice = getComputerChoice();
-    console.log("Initial computer choice: " + computerChoice);
-    let humanChoice = getHumanChoice();
-    console.log("Initial human choice: " + humanChoice);
-    const roundPlayed = playRound(humanChoice, computerChoice);
-    console.log("Last line= " + roundPlayed);
-    console.log("human: " + humanScore, "computer: " + computerScore);
-
-    //The following is the logic which allows for displaying the outcome of a game played
-    if (humanScore === 5 && humanScore > computerScore) {
-      // alert(tellHumanTheyWon);
-      return;
-    } else if (humanScore > computerScore + 2) {
-      //Allows the game to not drag on unnecessarily
-      // alert(tellHumanTheyWon);
-      return;
-    } else if (i === 5 && computerScore > humanScore) {
-      // alert(tellHumanTheyLost);
-      return;
-    }
-  }
+const rpsWinConditions = {
+  rock: { winsAgainst: "scissors", losesAgainst: "paper" },
+  paper: { winsAgainst: "rock", losesAgainst: "scissors" },
+  scissors: { winsAgainst: "paper", losesAgainst: "rock" },
 };
-let resetAndPlayAgain = true;
-
-while (resetAndPlayAgain) {
-  humanScore = 0;
-  computerScore = 0;
-  round = 0;
-  console.log(humanScore, computerScore);
-  playGame();
-  // alert("Press ENTER to play again!");
-}
-
-/*The code can be condensed, but not without the risk of losing readability*/
+// rpsUI.displays.humanDisplay.textContent = "Rock";
+rpsUI.displays.computerDisplay.textContent = "Annika";
+rpsUI.displays.humanDisplay.textContent = "Roan";
+rpsUI.buttons.rock.style.backgroundColor = "red";
+rpsUI.buttons.paper.style.backgroundColor = "yellow";
+rpsUI.buttons.scissors.style.backgroundColor = "green";
+rpsUI.buttons.replay.style.backgroundColor = "orange";
+rpsUI.nameAndScore.human.name.style.color = "#FF75DB";
+rpsUI.nameAndScore.human.score.style.color = "#42B34D";
+rpsUI.nameAndScore.computer.name.style.color = "#00B2B1";
+rpsUI.nameAndScore.computer.score.style.color = "#DB2B23";
+rpsUI.round.textContent = "Ime Da Boss!!!";
+// rpsUI.startEndScreen.classList.add("start-end-swipe");
