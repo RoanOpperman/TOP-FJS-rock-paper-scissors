@@ -9,8 +9,8 @@
   </head>
 
   <body>
-    <div class="gradient-layer"></div>
     <div id="container">
+      <div id="start-end-screen"></div>
       <div class="btn-replay-text">REPLAY</div>
       <div class="round">ROUND 1</div>
       <div class="btn-replay"></div>
@@ -34,12 +34,14 @@
         </div>
         <div class="choice-display-container">
           <div class="choice-display default-display-state">
-            <span class="choice-display-txt-slide-in">Rock</span>
+            <span id="human-display" class="choice-display-txt-slide-in"
+              >Let's Play!</span
+            >
           </div>
         </div>
         <div class="player-info">
-          <div class="player-name player">HUMAN</div>
-          <div class="player-score player">00</div>
+          <div id="human-name" class="player-name player">HUMAN</div>
+          <div id="human-score" class="player-score player">00</div>
         </div>
       </div>
       <!--change below after above is layed out-->
@@ -50,8 +52,8 @@
         </div>
         <div id="human-choices"></div>
         <div id="computer-display" class="choice-display-container">
-          <div class="choice-display win-round-display-state">
-            Computer Wins!
+          <div class="choice-display default-display-state">
+            <span class="choice-display-txt-slide-in">Choice</span>
           </div>
         </div>
       </div>
