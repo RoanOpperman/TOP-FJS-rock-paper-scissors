@@ -18,6 +18,31 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
 }
+@keyframes roundNotify {
+  0% {
+    top: -10%;
+  }
+  20% {
+    top: 4%;
+  }
+  80% {
+    top: 4%;
+  }
+  100% {
+    top: -10%;
+  }
+}
+.round-number-animate {
+  animation: roundNotify 4s ease-out;
+}
+
+#round-number {
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  transform: translateX(-50%);
+}
 .start-end-swipe {
   position: absolute;
   top: 0;
@@ -121,9 +146,6 @@ body {
   flex-direction: column;
 }
 .btn-replay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: rgb(0, 0, 0, 0);
   box-shadow: inset 2px 3px 1px rgb(255, 255, 255, 0.2),
     -4px -4px 20px rgb(255, 255, 255, 0.18), 4px 4px 10px rgb(0, 0, 0, 0.18),
@@ -131,6 +153,13 @@ body {
   border-radius: 40px;
   filter: blur(3px);
   height: 40px;
+}
+.btn-replay,
+.btn-replay-text {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  justify-content: center;
   left: calc(50vw - 50px);
   position: absolute;
   top: calc(82vh - 15px);
@@ -138,16 +167,8 @@ body {
   z-index: 2;
 }
 .btn-replay-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: white;
   font-weight: 600;
-  height: 40px;
-  left: calc(50vw - 32px);
-  position: absolute;
-  top: calc(82vh - 15px);
-  z-index: 2;
 }
 .players {
   flex: 1;
@@ -262,26 +283,23 @@ body {
     border-radius: 150px;
     height: 50px;
   }
-  .btn-replay {
-    top: 85vh;
-    left: calc(50vw - 50px);
-  }
+  .btn-replay,
   .btn-replay-text {
     top: 85vh;
-    left: calc(50vw - 33px);
+    left: calc(50vw - 50px);
   }
 }
 @media only screen and (min-width: 600px) {
   #container {
     flex-direction: row;
   }
-  .btn-replay {
-    top: 70vh;
-    left: calc(50vw - 50px);
+  .round-message {
+    top: 16%;
   }
+  .btn-replay,
   .btn-replay-text {
     top: 70vh;
-    left: calc(50vw - 33px);
+    left: calc(50vw - 53px);
   }
   .choice-display {
     border-radius: 150px;
@@ -308,6 +326,9 @@ body {
     font-size: 2.5rem;
     font-weight: 600;
     display: flex;
+  }
+  .player-info {
+    flex: 1;
   }
 }
 @media only screen and (max-width: 800px) {
@@ -344,5 +365,12 @@ body {
       transform: translateX(-50%);
       opacity: 1;
     }
+  }
+  .btn-replay,
+  .btn-replay-text {
+    top: calc(62vh - 15px);
+  }
+  .player-info {
+    flex: 2;
   }
 }

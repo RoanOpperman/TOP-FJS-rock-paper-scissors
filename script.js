@@ -20,6 +20,7 @@ const rpsUI = {
       score: document.querySelector("#computer-score"),
     },
   },
+  roundNumber: document.querySelector("#round-number"),
   roundMessage: document.querySelector(".round-message"),
   startEndScreen: document.querySelector("#start-end-screen"),
 };
@@ -48,12 +49,13 @@ const choices = {
   },
   human: {},
 };
+
 const rpsWinConditions = {
   rock: { winsAgainst: "Scissors", losesAgainst: "Paper" },
   paper: { winsAgainst: "Rock", losesAgainst: "Scissors" },
   scissors: { winsAgainst: "Paper", losesAgainst: "Rock" },
 };
-
+rpsUI.roundNumber.classList.add("round-number-animate");
 const tie = function () {
   if (
     rpsUI.displays.computerDisplay.textContent ===
@@ -89,7 +91,11 @@ const showWinLoseTie = function (rpsElement) {
     tie();
   }
 };
-
+rpsUI.buttons.humanChoices.addEventListener("mouseup", function () {
+  rpsUI.roundNumber.classList.remove("round-number-animate");
+  void rpsUI.roundNumber.offsetWidth;
+  rpsUI.roundNumber.classList.add("round-number-animate");
+});
 rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
   rpsUI.displays.computerDisplay.textContent = choices.computer.choice(); //displays computer's random selection
   const btnName = event.target.parentNode.parentNode.getAttribute("id"); //? clean up (parentNode.parentNode)
