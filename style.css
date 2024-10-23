@@ -66,6 +66,10 @@ body {
     opacity: 1;
   }
 }
+.choice-display-txt-slide-in {
+  position: relative;
+  animation: optionIn 0.8s;
+}
 @keyframes optionOut {
   0% {
     opacity: 1;
@@ -75,12 +79,15 @@ body {
     opacity: 0;
   }
   100% {
-    left: -50%;
+    left: -150%;
     opacity: 0;
   }
 }
+.choice-display-txt-slide-out {
+  animation: optionOut 0.8s;
+}
 
-.round {
+.round-message {
   color: white;
   font-size: 2.5rem;
   font-weight: 600;
@@ -88,9 +95,10 @@ body {
   white-space: nowrap;
   top: 35%;
   opacity: 0;
-  animation: slide 6s cubic-bezier(0.44, 0.01, 0, 1.05);
 }
-
+.slider-animate {
+  animation: slide 2s cubic-bezier(0.44, 0.01, 0, 1.05);
+}
 .gradient-layer {
   position: absolute;
   top: 0;
@@ -206,14 +214,6 @@ body {
   box-shadow: inset -0.3rem -1.03rem 0.1rem -1rem rgb(255, 255, 255, 0.5),
     inset 0.3rem 0.3rem 0.7rem 0rem rgb(0, 0, 0, 0.5);
 }
-.choice-display-txt-slide-in {
-  position: relative;
-  animation: optionIn 0.8s;
-}
-.choice-display-txt-slide-out {
-  animation: optionOut 1.6s;
-}
-
 .player-info {
   flex: 1;
   display: flex;

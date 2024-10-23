@@ -4,6 +4,7 @@ const rpsUI = {
     computerDisplay: document.querySelector("#computer-display-txt"),
   },
   buttons: {
+    humanChoices: document.querySelector("#human-choices"),
     rock: document.querySelector("#rock .btn-element"),
     paper: document.querySelector("#paper .btn-element"),
     scissors: document.querySelector("#scissors .btn-element"),
@@ -19,7 +20,7 @@ const rpsUI = {
       score: document.querySelector("#computer-score"),
     },
   },
-  round: document.querySelector(".round"),
+  roundMessage: document.querySelector(".round-message"),
   startEndScreen: document.querySelector("#start-end-screen"),
 };
 const startVars = {
@@ -47,69 +48,69 @@ const choices = {
   },
   human: {},
 };
-
 const rpsWinConditions = {
-  rock: { winsAgainst: "scissors", losesAgainst: "paper" },
-  paper: { winsAgainst: "rock", losesAgainst: "scissors" },
-  scissors: { winsAgainst: "paper", losesAgainst: "rock" },
+  rock: { winsAgainst: "Scissors", losesAgainst: "Paper" },
+  paper: { winsAgainst: "Rock", losesAgainst: "Scissors" },
+  scissors: { winsAgainst: "Paper", losesAgainst: "Rock" },
 };
-const humanDecided = new Event("humanDecided");
 
-rpsUI.buttons.rock.addEventListener("mouseup", function (e) {
-  rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-out");
-  rpsUI.displays.humanDisplay.style.left = "100%";
+const tie = function () {
+  if (
+    rpsUI.displays.computerDisplay.textContent ===
+    rpsUI.displays.humanDisplay.textContent
+  ) {
+    setTimeout(() => {
+      rpsUI.roundMessage.textContent = "TIE";
+      rpsUI.roundMessage.classList.add("slider-animate");
+    }, 10);
+    rpsUI.roundMessage.classList.remove("slider-animate");
+  }
+};
 
-  rpsUI.displays.humanDisplay.classList.remove("choice-display-txt-slide-in");
-  setTimeout(function () {
-    rpsUI.displays.humanDisplay.textContent = choices.rock;
-    rpsUI.displays.humanDisplay.classList.remove(
-      "choice-display-txt-slide-out"
-    );
-  }, 300);
-  setTimeout(function () {
-    rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-in");
-  }, 10);
-  rpsUI.displays.humanDisplay.style.left = "0%";
-  rpsUI.buttons.rock.dispatchEvent(humanDecided, "humanDecided");
+const showWinLoseTie = function (rpsElement) {
+  if (
+    //checks if human wins when the computer makes a "choice"(random)
+    rpsUI.displays.computerDisplay.textContent ===
+    rpsWinConditions[rpsElement].winsAgainst
+  ) {
+    rpsUI.roundMessage.textContent = "NICE ONE!";
+    rpsUI.roundMessage.classList.remove("slider-animate"); //reset so it can animate again
+    void rpsUI.roundMessage.offsetWidth;
+    rpsUI.roundMessage.classList.add("slider-animate");
+  } else if (
+    rpsUI.displays.computerDisplay.textContent ===
+    rpsWinConditions[rpsElement].losesAgainst
+  ) {
+    rpsUI.roundMessage.textContent = "Awe, TRY AGAIN!";
+    rpsUI.roundMessage.classList.remove("slider-animate"); //reset so it can animate again
+    void rpsUI.roundMessage.offsetWidth;
+    rpsUI.roundMessage.classList.add("slider-animate");
+  } else {
+    tie();
+  }
+};
+
+rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
+  rpsUI.displays.computerDisplay.textContent = choices.computer.choice(); //displays computer's random selection
+  const btnName = event.target.parentNode.parentNode.getAttribute("id"); //? clean up (parentNode.parentNode)
+
+  switch (btnName) {
+    case "Rock":
+      rpsUI.displays.humanDisplay.textContent = choices.rock;
+      showWinLoseTie("rock");
+      break;
+    case "Paper":
+      rpsUI.displays.humanDisplay.textContent = choices.paper;
+      showWinLoseTie("paper");
+      break;
+    case "Scissors":
+      rpsUI.displays.humanDisplay.textContent = choices.scissors;
+      showWinLoseTie("scissors");
+      break;
+    default:
+  }
 });
-rpsUI.buttons.paper.addEventListener("mouseup", function (e) {
-  rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-out");
-  rpsUI.displays.humanDisplay.style.left = "100%";
 
-  rpsUI.displays.humanDisplay.classList.remove("choice-display-txt-slide-in");
-  setTimeout(function () {
-    rpsUI.displays.humanDisplay.textContent = choices.paper;
-    rpsUI.displays.humanDisplay.classList.remove(
-      "choice-display-txt-slide-out"
-    );
-  }, 300);
-  setTimeout(function () {
-    rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-in");
-  }, 10);
-  rpsUI.displays.humanDisplay.style.left = "0%";
-  rpsUI.buttons.rock.dispatchEvent(humanDecided, "humanDecided");
-});
-rpsUI.buttons.scissors.addEventListener("mouseup", function (e) {
-  rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-out");
-  rpsUI.displays.humanDisplay.style.left = "100%";
-
-  rpsUI.displays.humanDisplay.classList.remove("choice-display-txt-slide-in");
-  setTimeout(function () {
-    rpsUI.displays.humanDisplay.textContent = choices.scissors;
-    rpsUI.displays.humanDisplay.classList.remove(
-      "choice-display-txt-slide-out"
-    );
-  }, 300);
-  setTimeout(function () {
-    rpsUI.displays.humanDisplay.classList.add("choice-display-txt-slide-in");
-  }, 10);
-  rpsUI.displays.humanDisplay.style.left = "0%";
-  rpsUI.buttons.rock.dispatchEvent(humanDecided, "humanDecided");
-});
-
-document.querySelector(".btn-element").addEventListener("humanDecided", () => {
-  rpsUI.displays.computerDisplay.textContent = choices.computer.choice();
-});
 // rpsUI.displays.humanDisplay.textContent = "Rock";
 // rpsUI.displays.computerDisplay.textContent = "Annika";
 // rpsUI.displays.humanDisplay.textContent = "Roan";
