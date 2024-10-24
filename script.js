@@ -5,6 +5,7 @@ const rpsUI = {
   },
   buttons: {
     humanChoices: document.querySelector("#human-choices"),
+    rpsElementButtons: document.querySelectorAll(".btn-element"),
     rock: document.querySelector("#rock .btn-element"),
     paper: document.querySelector("#paper .btn-element"),
     scissors: document.querySelector("#scissors .btn-element"),
@@ -29,7 +30,7 @@ const startVars = {
     humanScore: 0,
     computerScore: 0,
   },
-  round: 0,
+  round: 1,
 };
 const choices = {
   rock: "Rock",
@@ -47,7 +48,6 @@ const choices = {
       }
     },
   },
-  human: {},
 };
 
 const rpsWinConditions = {
@@ -55,7 +55,19 @@ const rpsWinConditions = {
   paper: { winsAgainst: "Rock", losesAgainst: "Scissors" },
   scissors: { winsAgainst: "Paper", losesAgainst: "Rock" },
 };
-rpsUI.roundNumber.classList.add("round-number-animate");
+let roundNum = startVars.round;
+window.addEventListener("load", function () {
+  rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
+  rpsUI.roundNumber.classList.remove("round-number-animate");
+  void rpsUI.roundNumber.offsetWidth;
+  rpsUI.roundNumber.classList.add("round-number-animate");
+});
+
+let humanScore = startVars.scores.humanScore;
+let computerScore = startVars.scores.computerScore;
+console.log(humanScore, computerScore);
+rpsUI.nameAndScore.human.score.textContent = startVars.scores.humanScore;
+rpsUI.nameAndScore.computer.score.textContent = startVars.scores.computerScore;
 const tie = function () {
   if (
     rpsUI.displays.computerDisplay.textContent ===
@@ -69,7 +81,7 @@ const tie = function () {
   }
 };
 
-const showWinLoseTie = function (rpsElement) {
+const winLoseTie = function (rpsElement) {
   if (
     //checks if human wins when the computer makes a "choice"(random)
     rpsUI.displays.computerDisplay.textContent ===
@@ -79,6 +91,8 @@ const showWinLoseTie = function (rpsElement) {
     rpsUI.roundMessage.classList.remove("slider-animate"); //reset so it can animate again
     void rpsUI.roundMessage.offsetWidth;
     rpsUI.roundMessage.classList.add("slider-animate");
+    humanScore++;
+    rpsUI.nameAndScore.human.score.textContent = humanScore;
   } else if (
     rpsUI.displays.computerDisplay.textContent ===
     rpsWinConditions[rpsElement].losesAgainst
@@ -87,33 +101,72 @@ const showWinLoseTie = function (rpsElement) {
     rpsUI.roundMessage.classList.remove("slider-animate"); //reset so it can animate again
     void rpsUI.roundMessage.offsetWidth;
     rpsUI.roundMessage.classList.add("slider-animate");
+    computerScore++;
+    rpsUI.nameAndScore.computer.score.textContent = computerScore;
   } else {
     tie();
   }
+
+  if (roundNum === 5 && computerScore < humanScore) {
+    rpsUI.roundMessage.textContent = "You WIN!";
+    rpsUI.roundMessage.classList.remove("slider-animate"); //reset so it can animate again
+    void rpsUI.roundMessage.offsetWidth;
+    rpsUI.roundMessage.classList.add("slider-animate");
+  } else if (roundNum === 5 && humanScore < computerScore) {
+    rpsUI.roundMessage.textContent = "You Lose :(";
+    rpsUI.roundMessage.classList.remove("slider-animate"); //reset so it can animate again
+    void rpsUI.roundMessage.offsetWidth;
+    rpsUI.roundMessage.classList.add("slider-animate");
+  } else if (roundNum === 5 && humanScore === computerScore) {
+    rpsUI.roundMessage.textContent = "ITSA TIE, TRY AGAIN!";
+    rpsUI.roundMessage.classList.remove("slider-animate"); //reset so it can animate again
+    void rpsUI.roundMessage.offsetWidth;
+    rpsUI.roundMessage.classList.add("slider-animate");
+  }
 };
+
 rpsUI.buttons.humanChoices.addEventListener("mouseup", function () {
   rpsUI.roundNumber.classList.remove("round-number-animate");
   void rpsUI.roundNumber.offsetWidth;
   rpsUI.roundNumber.classList.add("round-number-animate");
 });
+for (let button of rpsUI.buttons.rpsElementButtons) {
+  button.classList.add("btn-element-shade-out");
+  button.addEventListener("mousedown", function () {
+    button.classList.remove("btn-element-shade-out");
+    void button.offsetWidth;
+    button.classList.add("btn-element-shade-in");
+  });
+  button.addEventListener("mouseup", function () {
+    button.classList.remove("btn-element-shade-in");
+    void button.offsetWidth;
+    button.classList.add("btn-element-shade-out");
+  });
+}
 rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
   rpsUI.displays.computerDisplay.textContent = choices.computer.choice(); //displays computer's random selection
   const btnName = event.target.parentNode.parentNode.getAttribute("id"); //? clean up (parentNode.parentNode)
+  roundNum++;
+  if (roundNum <= 5) {
+    rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
 
-  switch (btnName) {
-    case "Rock":
-      rpsUI.displays.humanDisplay.textContent = choices.rock;
-      showWinLoseTie("rock");
-      break;
-    case "Paper":
-      rpsUI.displays.humanDisplay.textContent = choices.paper;
-      showWinLoseTie("paper");
-      break;
-    case "Scissors":
-      rpsUI.displays.humanDisplay.textContent = choices.scissors;
-      showWinLoseTie("scissors");
-      break;
-    default:
+    switch (btnName) {
+      case "Rock":
+        rpsUI.displays.humanDisplay.textContent = choices.rock;
+        winLoseTie("rock");
+        break;
+      case "Paper":
+        rpsUI.displays.humanDisplay.textContent = choices.paper;
+        winLoseTie("paper");
+        break;
+      case "Scissors":
+        rpsUI.displays.humanDisplay.textContent = choices.scissors;
+        winLoseTie("scissors");
+        break;
+      default:
+    }
+  } else {
+    rpsUI.roundNumber.classList.remove("round-number-animate");
   }
 });
 
