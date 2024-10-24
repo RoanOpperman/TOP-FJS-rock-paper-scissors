@@ -55,7 +55,30 @@ const rpsWinConditions = {
   paper: { winsAgainst: "Rock", losesAgainst: "Scissors" },
   scissors: { winsAgainst: "Paper", losesAgainst: "Rock" },
 };
+for (let button of rpsUI.buttons.rpsElementButtons) {
+  button.classList.add("btn-element-shade-out");
+}
 let roundNum = startVars.round;
+
+const elementBtnPress = function () {
+  for (let button of rpsUI.buttons.rpsElementButtons) {
+    button.addEventListener("mousedown", function () {
+      if (roundNum >= 5) {
+        return;
+      }
+      button.classList.remove("btn-element-shade-out");
+      void button.offsetWidth; // Force a reflow to ensure the class change is noticed
+      button.classList.add("btn-element-shade-in");
+    });
+
+    button.addEventListener("mouseup", function () {
+      button.classList.remove("btn-element-shade-in");
+      void button.offsetWidth; // Force a reflow again
+      button.classList.add("btn-element-shade-out");
+    });
+  }
+};
+elementBtnPress();
 window.addEventListener("load", function () {
   rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
   rpsUI.roundNumber.classList.remove("round-number-animate");
@@ -71,7 +94,8 @@ rpsUI.nameAndScore.computer.score.textContent = startVars.scores.computerScore;
 const tie = function () {
   if (
     rpsUI.displays.computerDisplay.textContent ===
-    rpsUI.displays.humanDisplay.textContent
+      rpsUI.displays.humanDisplay.textContent &&
+    roundNum < 5
   ) {
     setTimeout(() => {
       rpsUI.roundMessage.textContent = "TIE";
@@ -124,32 +148,27 @@ const winLoseTie = function (rpsElement) {
     rpsUI.roundMessage.classList.add("slider-animate");
   }
 };
-
 rpsUI.buttons.humanChoices.addEventListener("mouseup", function () {
   rpsUI.roundNumber.classList.remove("round-number-animate");
   void rpsUI.roundNumber.offsetWidth;
   rpsUI.roundNumber.classList.add("round-number-animate");
 });
-for (let button of rpsUI.buttons.rpsElementButtons) {
-  button.classList.add("btn-element-shade-out");
-  button.addEventListener("mousedown", function () {
-    button.classList.remove("btn-element-shade-out");
-    void button.offsetWidth;
-    button.classList.add("btn-element-shade-in");
-  });
-  button.addEventListener("mouseup", function () {
-    button.classList.remove("btn-element-shade-in");
-    void button.offsetWidth;
-    button.classList.add("btn-element-shade-out");
-  });
-}
-rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
-  rpsUI.displays.computerDisplay.textContent = choices.computer.choice(); //displays computer's random selection
-  const btnName = event.target.parentNode.parentNode.getAttribute("id"); //? clean up (parentNode.parentNode)
-  roundNum++;
-  if (roundNum <= 5) {
-    rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
 
+// Animates and displays the current round number
+
+rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
+  roundNum++;
+  if (roundNum > 4) {
+    const btnIcons = document.querySelectorAll(".btn-icon");
+    for (let icon of btnIcons) {
+      icon.style.opacity = ".3";
+    }
+  }
+  if (roundNum <= 5) {
+    rpsUI.displays.computerDisplay.textContent = choices.computer.choice(); //displays computer's random selection
+    const btnName = event.target.parentNode.parentNode.getAttribute("id"); //? clean up (parentNode.parentNode)
+
+    rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
     switch (btnName) {
       case "Rock":
         rpsUI.displays.humanDisplay.textContent = choices.rock;
