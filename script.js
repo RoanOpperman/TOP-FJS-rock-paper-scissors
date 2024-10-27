@@ -49,6 +49,10 @@ const choices = {
     },
   },
 };
+const screens = {
+  start: document.querySelector("#start-screen"),
+  end: document.querySelector("#end-screen"),
+};
 
 const rpsWinConditions = {
   rock: { winsAgainst: "Scissors", losesAgainst: "Paper" },
@@ -164,6 +168,7 @@ rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
     rpsUI.displays.computerDisplay.textContent = choices.computer.choice(); //displays computer's random selection
     const btnName = event.target.parentNode.parentNode.getAttribute("id"); //? clean up (parentNode.parentNode)
     rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
+
     switch (btnName) {
       case "Rock":
         rpsUI.displays.humanDisplay.textContent = choices.rock;
@@ -182,10 +187,26 @@ rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
   } else {
     rpsUI.roundNumber.classList.remove("round-number-animate");
   }
+  //* END SCREEN
+  if (roundNum === 5) {
+    screens.end.classList.add("end-screen");
+    if (humanScore > computerScore) {
+      screens.end.classList.add("end-screen-win");
+    } else if (humanScore < computerScore) {
+      screens.end.classList.add("end-screen-lose");
+    } else {
+      screens.end.classList.add("end-screen-tie");
+    }
+  }
+  //* **************************************************************
 });
 //* REPLAY (RESET GAME TO ORIGINAL STATE)
 const replay = function () {
   roundNum = 1;
+  screens.end.classList.remove("end-screen");
+  screens.end.classList.remove("end-screen-win");
+  screens.end.classList.remove("end-screen-lose");
+  screens.end.classList.remove("end-screen-tie");
   rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
   rpsUI.roundNumber.classList.remove("round-number-animate");
   void rpsUI.roundNumber.offsetWidth;
@@ -202,6 +223,10 @@ const replay = function () {
     }
   }
 };
+screens.end.classList.remove("end-screen-win");
+screens.end.classList.remove("end-screen-lose");
+screens.end.classList.remove("end-screen-tie");
+rpsUI.buttons.replay.classList.add("btn-element-shade-out");
 rpsUI.buttons.replay.addEventListener("mousedown", function () {
   rpsUI.buttons.replay.classList.remove("btn-element-shade-out");
   void rpsUI.buttons.replay.offsetWidth; // Force a reflow to ensure the class change is noticed
