@@ -59,7 +59,6 @@ for (let button of rpsUI.buttons.rpsElementButtons) {
   button.classList.add("btn-element-shade-out");
 }
 let roundNum = startVars.round;
-
 const elementBtnPress = function () {
   for (let button of rpsUI.buttons.rpsElementButtons) {
     button.addEventListener("mousedown", function () {
@@ -70,7 +69,6 @@ const elementBtnPress = function () {
       void button.offsetWidth; // Force a reflow to ensure the class change is noticed
       button.classList.add("btn-element-shade-in");
     });
-
     button.addEventListener("mouseup", function () {
       button.classList.remove("btn-element-shade-in");
       void button.offsetWidth; // Force a reflow again
@@ -153,13 +151,11 @@ rpsUI.buttons.humanChoices.addEventListener("mouseup", function () {
   void rpsUI.roundNumber.offsetWidth;
   rpsUI.roundNumber.classList.add("round-number-animate");
 });
-
 // Animates and displays the current round number
-
+const btnIcons = document.querySelectorAll(".btn-icon");
 rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
   roundNum++;
   if (roundNum > 4) {
-    const btnIcons = document.querySelectorAll(".btn-icon");
     for (let icon of btnIcons) {
       icon.style.opacity = ".3";
     }
@@ -167,7 +163,6 @@ rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
   if (roundNum <= 5) {
     rpsUI.displays.computerDisplay.textContent = choices.computer.choice(); //displays computer's random selection
     const btnName = event.target.parentNode.parentNode.getAttribute("id"); //? clean up (parentNode.parentNode)
-
     rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
     switch (btnName) {
       case "Rock":
@@ -188,17 +183,33 @@ rpsUI.buttons.humanChoices.addEventListener("mouseup", function (event) {
     rpsUI.roundNumber.classList.remove("round-number-animate");
   }
 });
-
-// rpsUI.displays.humanDisplay.textContent = "Rock";
-// rpsUI.displays.computerDisplay.textContent = "Annika";
-// rpsUI.displays.humanDisplay.textContent = "Roan";
-// rpsUI.buttons.rock.style.backgroundColor = "red";
-// rpsUI.buttons.paper.style.backgroundColor = "yellow";
-// rpsUI.buttons.scissors.style.backgroundColor = "green";
-// rpsUI.buttons.replay.style.backgroundColor = "orange";
-// rpsUI.nameAndScore.human.name.style.color = "#FF75DB";
-// rpsUI.nameAndScore.human.score.style.color = "#42B34D";
-// rpsUI.nameAndScore.computer.name.style.color = "#00B2B1";
-// rpsUI.nameAndScore.computer.score.style.color = "#DB2B23";
-// rpsUI.round.textContent = "Ime Da Boss!!!";
-// rpsUI.startEndScreen.classList.add("start-end-swipe");
+//* REPLAY (RESET GAME TO ORIGINAL STATE)
+const replay = function () {
+  roundNum = 1;
+  rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
+  rpsUI.roundNumber.classList.remove("round-number-animate");
+  void rpsUI.roundNumber.offsetWidth;
+  rpsUI.roundNumber.classList.add("round-number-animate");
+  rpsUI.displays.humanDisplay.textContent = "Let's GO!!!";
+  rpsUI.displays.computerDisplay.textContent = "";
+  rpsUI.nameAndScore.human.score.textContent = "0";
+  rpsUI.nameAndScore.computer.score.textContent = "0";
+  humanScore = 0;
+  computerScore = 0;
+  if (roundNum < 4) {
+    for (let icon of btnIcons) {
+      icon.style.opacity = "1";
+    }
+  }
+};
+rpsUI.buttons.replay.addEventListener("mousedown", function () {
+  rpsUI.buttons.replay.classList.remove("btn-element-shade-out");
+  void rpsUI.buttons.replay.offsetWidth; // Force a reflow to ensure the class change is noticed
+  rpsUI.buttons.replay.classList.add("btn-element-shade-in");
+});
+rpsUI.buttons.replay.addEventListener("mouseup", function () {
+  rpsUI.buttons.replay.classList.remove("btn-element-shade-in");
+  void rpsUI.buttons.replay.offsetWidth; // Force a reflow again
+  rpsUI.buttons.replay.classList.add("btn-element-shade-out");
+});
+rpsUI.buttons.replay.addEventListener("mouseup", replay);
