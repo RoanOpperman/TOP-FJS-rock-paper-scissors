@@ -4,6 +4,7 @@ const rpsUI = {
     computerDisplay: document.querySelector("#computer-display-txt"),
   },
   buttons: {
+    play: document.querySelector("#start-btn"),
     humanChoices: document.querySelector("#human-choices"),
     rpsElementButtons: document.querySelectorAll(".btn-element"),
     rock: document.querySelector("#rock .btn-element"),
@@ -23,7 +24,6 @@ const rpsUI = {
   },
   roundNumber: document.querySelector("#round-number"),
   roundMessage: document.querySelector(".round-message"),
-  startEndScreen: document.querySelector("#start-end-screen"),
 };
 const startVars = {
   scores: {
@@ -49,6 +49,7 @@ const choices = {
     },
   },
 };
+
 const screens = {
   start: document.querySelector("#start-screen"),
   end: document.querySelector("#end-screen"),
@@ -62,6 +63,7 @@ const rpsWinConditions = {
 for (let button of rpsUI.buttons.rpsElementButtons) {
   button.classList.add("btn-element-shade-out");
 }
+
 let roundNum = startVars.round;
 const elementBtnPress = function () {
   for (let button of rpsUI.buttons.rpsElementButtons) {
@@ -81,12 +83,6 @@ const elementBtnPress = function () {
   }
 };
 elementBtnPress();
-window.addEventListener("load", function () {
-  rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
-  rpsUI.roundNumber.classList.remove("round-number-animate");
-  void rpsUI.roundNumber.offsetWidth;
-  rpsUI.roundNumber.classList.add("round-number-animate");
-});
 
 let humanScore = startVars.scores.humanScore;
 let computerScore = startVars.scores.computerScore;
@@ -238,3 +234,14 @@ rpsUI.buttons.replay.addEventListener("mouseup", function () {
   rpsUI.buttons.replay.classList.add("btn-element-shade-out");
 });
 rpsUI.buttons.replay.addEventListener("mouseup", replay);
+const startGame = function () {
+  screens.start.classList.add("start-fade-out");
+  rpsUI.roundNumber.textContent = `Round ${roundNum}/5`;
+  rpsUI.roundNumber.classList.remove("round-number-animate");
+  void rpsUI.roundNumber.offsetWidth;
+  rpsUI.roundNumber.classList.add("round-number-animate");
+  setTimeout(function () {
+    screens.start.style["z-index"] = "-1";
+  }, 2000);
+};
+rpsUI.buttons.play.addEventListener("mouseup", startGame);

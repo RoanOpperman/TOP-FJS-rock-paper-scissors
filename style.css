@@ -18,6 +18,85 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
 }
+@keyframes startTextToBlur {
+  0% {
+    filter: blur(0px);
+  }
+  100% {
+    filter: blur(8px);
+  }
+}
+@keyframes startFadeOut {
+  0% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+  100% {
+    filter: blur(100px);
+    opacity: 0;
+  }
+}
+.start-fade-out {
+  animation: startFadeOut 2s linear;
+}
+.start-txt-to-blur {
+  animation: startTextToBlur 2s linear;
+}
+.start-screen-solid {
+  background: radial-gradient(
+    circle,
+    rgba(255, 100, 100, 1) 0%,
+    rgba(255, 99, 71, 1) 46%,
+    rgba(210, 80, 56, 1) 100%
+  );
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+}
+.start-screen-solid button {
+  width: 100%;
+  border: none;
+  color: tomato;
+  height: 1.8rem;
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.start-screen-txt {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-weight: 600;
+  font-size: 3.8rem;
+}
+#start-btn {
+  z-index: 3;
+}
+.start-screen-img {
+  mix-blend-mode: multiply;
+  opacity: 0.2;
+  filter: blur(6px);
+  position: absolute;
+  top: 24%;
+  left: 25%;
+  transform-origin: 51% 40%;
+}
+@keyframes rpsImageRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.start-screen-img-animate {
+  animation: rpsImageRotate 15s infinite linear;
+}
 @keyframes roundNotify {
   0% {
     top: -10%;
@@ -272,10 +351,10 @@ body {
   display: flex;
 }
 .end-screen-win {
-  background-color: rgb(0, 100, 0, 0.6);
+  background-color: rgb(0, 150, 0, 0.5);
 }
 .end-screen-lose {
-  background-color: rgb(255, 0, 0, 0.5);
+  background-color: rgb(255, 0, 0, 0.3);
 }
 .end-screen-tie {
   background-color: rgb(100, 100, 100, 0.6);
