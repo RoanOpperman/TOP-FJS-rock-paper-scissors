@@ -2,7 +2,7 @@
   margin: 0;
   box-sizing: border-box;
 }
-.computer-hidden {
+.invisible {
   visibility: hidden;
 }
 .win-round-display-state {
@@ -102,7 +102,7 @@ body {
   0% {
     top: -10%;
   }
-  20% {
+  10% {
     top: 4%;
   }
   80% {
@@ -113,7 +113,7 @@ body {
   }
 }
 .round-number-animate {
-  animation: roundNotify 4s ease-out;
+  animation: roundNotify 1s ease-out;
 }
 
 #round-number {
@@ -139,12 +139,12 @@ body {
   5% {
     opacity: 0;
   }
-  40% {
+  30% {
     left: 50vw; /* Move to the center */
     transform: translateX(-50%);
     opacity: 0.8;
   }
-  60% {
+  70% {
     left: 50vw; /* Pause in the center */
     transform: translateX(-50%);
     opacity: 1;
@@ -173,7 +173,7 @@ body {
 }
 .choice-display-txt-slide-in {
   position: relative;
-  animation: optionIn 0.8s;
+  animation: optionIn 0.3s;
 }
 @keyframes optionOut {
   0% {
@@ -184,15 +184,24 @@ body {
     opacity: 0;
   }
   100% {
-    left: -60%;
+    left: -50%;
     opacity: 0;
   }
 }
 .choice-display-txt-slide-out {
   position: relative;
-  animation: optionOut 0.8s;
+  animation: optionOut 0.4s;
 }
-
+.end-game-message {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 600;
+  position: absolute;
+  white-space: nowrap;
+  top: 35%;
+  opacity: 0;
+  z-index: 6;
+}
 .round-message {
   color: white;
   font-size: 2.5rem;
@@ -201,10 +210,12 @@ body {
   white-space: nowrap;
   top: 35%;
   opacity: 0;
-  z-index: 2;
 }
 .slider-animate {
   animation: slide 2s cubic-bezier(0.44, 0.01, 0, 1.05);
+}
+.end-slider-animate {
+  animation: slide 8s cubic-bezier(0.44, 0.01, 0, 1.05);
 }
 .gradient-layer {
   position: absolute;
@@ -361,14 +372,23 @@ body {
 .end-screen-tie {
   background-color: rgb(100, 100, 100, 0.6);
 }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .end-screen {
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
   z-index: 2;
+  animation: fade-in 2s ease-in;
 }
 
 @media only screen and (max-width: 340px) {
